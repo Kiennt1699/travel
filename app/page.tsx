@@ -6,7 +6,7 @@ import { Tabs, message } from 'antd';
 import { CarOutlined, HomeOutlined, AimOutlined } from '@ant-design/icons';
 import type { Dayjs } from 'dayjs';
 import { Logo } from '@/components/HomePage/Logo';
-import { HeroSection } from '@/components/HomePage/HeroSection';
+import { TravelContain } from '@/components/HomePage/TravelContain';
 import { BusSearchForm } from '@/components/HomePage/BusSearchForm';
 import { NoDataPlaceholder } from '@/components/HomePage/NoDataPlaceholder';
 import { TabLabel } from '@/components/HomePage/TabLabel';
@@ -105,7 +105,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center">
-          <HeroSection />
+          <TravelContain />
 
           <div 
             className="bg-white rounded-2xl p-6 md:p-8 shadow-xl w-full"

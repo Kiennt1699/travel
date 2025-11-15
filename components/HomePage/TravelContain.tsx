@@ -1,7 +1,7 @@
 import React from 'react';
 import { colors } from '@/lib/theme';
 
-export const HeroSection: React.FC = () => {
+export const TravelContain: React.FC = () => {
   return (
     <div className="text-center mb-12 max-w-3xl px-4">
       <h1 
