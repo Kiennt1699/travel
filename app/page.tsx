@@ -1,27 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Tabs, message } from 'antd';
-import { CarOutlined, HomeOutlined, AimOutlined } from '@ant-design/icons';
+import { message } from 'antd';
+import { FaBusAlt } from "react-icons/fa";
+import { IoIosBusiness } from "react-icons/io";
+import { RiFlightTakeoffFill } from "react-icons/ri";
+
 import type { Dayjs } from 'dayjs';
-import { Logo } from '@/components/HomePage/Logo';
-import { TravelContain } from '@/components/HomePage/TravelContain';
+import { Header } from '@/components/HomePage/Header';
 import { BusSearchForm } from '@/components/HomePage/BusSearchForm';
 import { NoDataPlaceholder } from '@/components/HomePage/NoDataPlaceholder';
-import { TabLabel } from '@/components/HomePage/TabLabel';
-import { CustomTabs } from '@/components/HomePage/CustomTabs';
+import { CustomTabs, TabLabel } from '@/components/HomePage/CustomTabs';
 import locationsData from './data/location.json';
 import { colors } from '@/lib/theme';
-import { stylesConfig } from '@/lib/styles.config';
 
-type Location = {
+export type Location = {
   short_code: string;
   english_name: string;
   code_state: string;
 };
 
-type FormValues = {
+export type FormValues = {
   from: string;
   to: string;
   departureDate: Dayjs;
@@ -42,11 +42,11 @@ export default function Home() {
       params.set('mode', 'bus');
       params.set('from', values.from);
       params.set('to', values.to);
-      params.set('dep', values.departureDate.format('YYYY-MM-DD'));
+      params.set('dep', values.departureDate.format('YYYY-MM-DD HH:mm'));
       params.set('pax', values.passengers.toString());
 
       if (values.roundTrip && values.returnDate) {
-        params.set('ret', values.returnDate.format('YYYY-MM-DD'));
+        params.set('ret', values.returnDate.format('YYYY-MM-DD HH:mm'));
       }
 
       router.push(`/search?${params.toString()}`);
@@ -60,7 +60,7 @@ export default function Home() {
       key: 'bus',
       label: (
         <TabLabel
-          icon={<CarOutlined style={{ fontSize: '18px' }} />}
+          icon={<FaBusAlt style={{ fontSize: '24px' }} />}
           label="Bus & Shuttle"
           iconColor={colors.tabs.bus.icon}
           iconBgColor={colors.tabs.bus.iconBg}
@@ -73,7 +73,7 @@ export default function Home() {
       key: 'hotel',
       label: (
         <TabLabel
-          icon={<HomeOutlined style={{ fontSize: '18px' }} />}
+          icon={<IoIosBusiness style={{ fontSize: '28px', fontWeight: 'bold', color: '#447a11' }} />}
           label="Hotel & Accommodation"
           iconColor={colors.tabs.hotel.icon}
           iconBgColor={colors.tabs.hotel.iconBg}
@@ -86,7 +86,7 @@ export default function Home() {
       key: 'flight',
       label: (
         <TabLabel
-          icon={<AimOutlined style={{ fontSize: '18px' }} />}
+          icon={<RiFlightTakeoffFill style={{ fontSize: '28px' }} />}
           label="Flight"
           iconColor={colors.tabs.flight.icon}
           iconBgColor={colors.tabs.flight.iconBg}
@@ -100,12 +100,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative px-4 md:px-8 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-start justify-between mb-12">
-          <Logo />
-        </div>
-
         <div className="flex flex-col items-center">
-          <TravelContain />
+          <Header />
 
           <div 
             className="bg-white rounded-2xl p-8 md:p-10 shadow-2xl w-full animate-scale-in"

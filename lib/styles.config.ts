@@ -12,7 +12,7 @@ export const stylesConfig = {
       display: 'flex',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      padding: '18px 24px',
+      padding: '16px 24px',
       margin: 0,
       borderRadius: 0,
       transition: 'all 0.3s ease',
@@ -32,7 +32,7 @@ export const stylesConfig = {
   },
   form: {
     grid: {
-      gap: '20px',
+      gap: '16px',
       marginBottom: '24px',
     },
     label: {
@@ -45,8 +45,9 @@ export const stylesConfig = {
       display: 'block',
     },
     icon: {
-      color: colors.text.tertiary,
+      color: 'black',
       fontSize: '18px',
+      marginRight: '12px',
     },
   },
   swapButton: {
@@ -62,15 +63,17 @@ export const stylesConfig = {
     boxShadow: '0 4px 12px rgba(6, 182, 212, 0.15)',
   },
   searchButton: {
-    backgroundColor: colors.tabs.bus.icon,
-    borderColor: colors.tabs.bus.icon,
+    backgroundColor: '#22d3ee',
+    borderColor: '#22d3ee',
     height: '56px',
     paddingLeft: '64px',
     paddingRight: '64px',
     borderRadius: '28px',
     fontWeight: 600,
     fontSize: '16px',
-    boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)',
+    letterSpacing: '0.5px',
+    boxShadow: '0 4px 20px rgba(34, 211, 238, 0.4)',
+    transition: 'all 0.3s ease',
   },
 };
 

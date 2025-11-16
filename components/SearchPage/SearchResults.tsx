@@ -2,27 +2,28 @@
 
 import React, { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Descriptions, Typography } from 'antd';
-import { CarOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { colors } from '@/lib/theme';
 import { SearchSkeleton } from '@/components/common/SearchSkeleton';
-
-const { Title } = Typography;
+import { stylesConfig } from '@/lib/styles.config';
 
 function SearchContent() {
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   
-  const mode = searchParams.get('mode') || '';
   const from = searchParams.get('from') || '';
   const to = searchParams.get('to') || '';
   const dep = searchParams.get('dep') || '';
   const ret = searchParams.get('ret') || '';
   const pax = searchParams.get('pax') || '1';
 
-  const departureDate = dep ? dayjs(dep) : null;
-  const returnDate = ret ? dayjs(ret) : null;
+  const parseDate = (dateStr: string) => {
+    if (!dateStr) return null;
+    const parsed = dayjs(dateStr, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD'], true);
+    return parsed.isValid() ? parsed : null;
+  };
+
+  const departureDate = parseDate(dep);
+  const returnDate = parseDate(ret);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,36 +37,53 @@ function SearchContent() {
     return <SearchSkeleton />;
   }
 
+  const InfoRow = ({ label }: { label: string }) => (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      paddingTop: '24px',
+      paddingBottom: '24px',
+      borderBottom: '1px solid #e5e7eb',
+    }}>
+      <span style={{
+        fontSize: '16px',
+        fontWeight: 400,
+        color: '#1f2937',
+        letterSpacing: '0.01em',
+      }}>
+        {label}
+      </span>
+    </div>
+  );
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen pt-16 px-4 animate-fade-in">
-      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xl w-full max-w-2xl">
-        <Title level={2} style={{ color: colors.text.primary, marginBottom: '2rem' }}>
-          Search Results
-        </Title>
-        
-        <Descriptions bordered column={1}>
-          <Descriptions.Item label="Mode">
-            <CarOutlined style={{ marginRight: '8px' }} />
-            {mode === 'bus' ? 'Bus & Shuttle' : mode}
-          </Descriptions.Item>
-          <Descriptions.Item label="From">
-            {from || 'N/A'}
-          </Descriptions.Item>
-          <Descriptions.Item label="To">
-            {to || 'N/A'}
-          </Descriptions.Item>
-          <Descriptions.Item label="Departure Date">
-            {departureDate ? departureDate.format('DD / MM / YYYY HH:mm') : 'N/A'}
-          </Descriptions.Item>
-          {returnDate && (
-            <Descriptions.Item label="Return Date">
-              {returnDate.format('DD / MM / YYYY HH:mm')}
-            </Descriptions.Item>
-          )}
-          <Descriptions.Item label="Number of Passengers">
-            {pax}
-          </Descriptions.Item>
-        </Descriptions>
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#e0f2fe',
+      padding: '0',
+    }}>
+
+      {/* Content */}
+      <div style={{
+        backgroundColor: '#e0f2fe',
+        padding: '40px 20px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}>
+        <div style={{
+          backgroundColor: '#ffffff',
+          borderRadius: '16px',
+          padding: '48px',
+          maxWidth: '800px',
+          width: '100%',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
+        }}>
+          <InfoRow label={`From: ${from}`} />
+          <InfoRow label="To:" />
+          <InfoRow label="Departure date:" />
+          <InfoRow label="Return date:" />
+          <InfoRow label="No. of passenger" />
+        </div>
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ export const themeConfig: ThemeConfig = {
       primaryShadow: 'none',
     },
     Input: {
-      controlHeight: 44,
+      controlHeight: 48,
       paddingBlock: 12,
       paddingInline: 16,
     },
@@ -71,12 +71,13 @@ export const themeConfig: ThemeConfig = {
       controlHeight: 44,
     },
     DatePicker: {
-      controlHeight: 44,
+      controlHeight: 48,
     },
     InputNumber: {
-      controlHeight: 44,
+      controlHeight: 48,
       paddingBlock: 12,
       paddingInline: 16,
+      handleVisible: true,
     },
     Form: {
       labelFontSize: 12,

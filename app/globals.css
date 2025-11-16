@@ -38,9 +38,9 @@ body {
 
 .custom-tabs-wrapper .ant-tabs-tab {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 20px 32px !important;
+  padding: 16px 24px !important;
   margin: 0 !important;
   border-radius: 12px 12px 0 0 !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -69,7 +69,7 @@ body {
 .custom-tabs-wrapper .ant-tabs-tab-btn {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -175,6 +175,14 @@ body {
   height: auto !important;
 }
 
+/* Ensure all form inputs have equal width */
+.ant-form-item .ant-input-affix-wrapper,
+.ant-form-item .ant-picker,
+.ant-form-item .ant-input-number,
+.ant-form-item .ant-select-auto-complete {
+  width: 100% !important;
+}
+
 .ant-input-affix-wrapper,
 .ant-picker,
 .ant-input-number {
@@ -210,11 +218,28 @@ body {
 }
 
 .ant-input-number {
-  padding-left: 16px !important;
+  width: 100% !important;
+}
+
+.ant-input-number-input-wrap {
+  width: 100% !important;
+}
+
+.ant-input-number .ant-input-number-input {
+  padding-left: 12px !important;
+}
+
+.ant-input-number .ant-input-number-prefix {
+  margin-right: 12px;
+  margin-left: 12px;
 }
 
 .ant-input-affix-wrapper .ant-input-prefix {
   margin-right: 12px;
+}
+
+.ant-input-affix-wrapper .ant-input {
+  padding-left: 0 !important;
 }
 
 /* Custom input styling */
@@ -248,7 +273,8 @@ body {
 
 .ant-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4) !important;
+  background-color: #06b6d4 !important;
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.5) !important;
 }
 
 .ant-btn-primary:active {
@@ -272,6 +298,26 @@ body {
 .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .ant-checkbox:hover .ant-checkbox-inner {
   border-color: #06b6d4;
+}
+
+/* AutoComplete styling */
+.ant-select-auto-complete {
+  width: 100% !important;
+}
+
+.ant-select-auto-complete .ant-select-selector {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.ant-select-auto-complete .ant-select-selection-search {
+  width: 100% !important;
+}
+
+.ant-select-auto-complete .ant-select-selection-placeholder {
+  padding-left: 0 !important;
 }
 
 /* Autocomplete dropdown */
@@ -298,8 +344,42 @@ body {
   background-color: #06b6d4 !important;
 }
 
+/* Today's date - cyan background */
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner {
+  background-color: #22d3ee !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+}
+
 .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
-  border-color: #06b6d4 !important;
+  display: none !important;
+}
+
+/* Selected date overrides today */
+.ant-picker-cell-in-view.ant-picker-cell-selected.ant-picker-cell-today .ant-picker-cell-inner {
+  background-color: #06b6d4 !important;
+}
+
+/* Weekend dates - red color */
+.ant-picker-cell-in-view:nth-child(7n) .ant-picker-cell-inner,
+.ant-picker-cell-in-view:nth-child(7n+1) .ant-picker-cell-inner {
+  color: #ef4444 !important;
+}
+
+/* Hover states */
+.ant-picker-cell-in-view:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
+  background-color: #f0f9ff !important;
+}
+
+/* DatePicker with prefix icon */
+.ant-picker-input {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ant-picker-input > input {
+  margin-left: 8px !important;
 }
 
 /* Responsive improvements */

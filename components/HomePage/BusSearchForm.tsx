@@ -1,28 +1,16 @@
 'use client';
 
-import React from 'react';
-import { Form, AutoComplete, Input, DatePicker, InputNumber, Checkbox, Button } from 'antd';
-import { SwapOutlined, SearchOutlined, CarOutlined } from '@ant-design/icons';
+import { Form, Checkbox, Button } from 'antd';
+import { IoSearch } from 'react-icons/io5';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
+import { useBusSearchForm } from '@/hooks/useBusSearchForm';
+import { LocationInput } from './form/LocationInput';
+import { DatePickerField } from './form/DatePickerField';
+import { SwapButton } from './form/SwapButton';
+import { PassengerInput } from './form/PassengerInput';
 import { colors } from '@/lib/theme';
 import { stylesConfig } from '@/lib/styles.config';
-
-type Location = {
-  short_code: string;
-  english_name: string;
-  code_state: string;
-};
-
-type FormValues = {
-  from: string;
-  to: string;
-  departureDate: Dayjs;
-  returnDate?: Dayjs;
-  roundTrip: boolean;
-  passengers: number;
-};
+import type { Location, FormValues } from '@/app/page';
 
 interface BusSearchFormProps {
   locations: Location[];
@@ -30,29 +18,16 @@ interface BusSearchFormProps {
 }
 
 export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmit }) => {
-  const [form] = Form.useForm();
-  const [roundTrip, setRoundTrip] = React.useState(false);
-  const [fromValue, setFromValue] = React.useState('');
-  const [toValue, setToValue] = React.useState('');
-
-  const filterLocations = (input: string): Location[] => {
-    if (!input) return locations;
-    const lowerInput = input.toLowerCase();
-    return locations.filter(
-      (loc) =>
-        loc.english_name.toLowerCase().includes(lowerInput) ||
-        loc.short_code.toLowerCase().includes(lowerInput) ||
-        loc.code_state.toLowerCase().includes(lowerInput)
-    );
-  };
-
-  const handleSwap = () => {
-    const currentFrom = form.getFieldValue('from');
-    const currentTo = form.getFieldValue('to');
-    form.setFieldsValue({ from: currentTo, to: currentFrom });
-    setFromValue(currentTo || '');
-    setToValue(currentFrom || '');
-  };
+  const {
+    form,
+    roundTrip,
+    setRoundTrip,
+    fromValue,
+    toValue,
+    filterLocations,
+    handleSwap,
+    handleLocationChange,
+  } = useBusSearchForm(locations);
 
   return (
     <Form
@@ -62,202 +37,77 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
       onFinish={onSubmit}
       className="animate-slide-up"
     >
-      <div 
-        className="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-6"
-        style={stylesConfig.form.grid}
-      >
-        <div className="relative">
-          <Form.Item
+      <div className="flex flex-col lg:flex-row gap-4 mt-6 items-start relative">
+        <div className="w-full lg:w-auto lg:flex-1 lg:max-w-[210px]">
+          <LocationInput
             name="from"
-            label={<span style={stylesConfig.form.label}>FROM</span>}
-            rules={[{ message: 'Please select origin' }]}
-            style={{ marginBottom: 0 }}
-          >
-            <AutoComplete
-              placeholder="Enter city, terminal..."
-              options={filterLocations(fromValue).map((loc) => ({
-                value: loc.english_name,
-                label: (
-                  <div>
-                    <strong>{loc.short_code}</strong> - {loc.english_name} ({loc.code_state})
-                  </div>
-                ),
-              }))}
-              value={fromValue}
-              onChange={(value: string) => {
-                setFromValue(value);
-                form.setFieldValue('from', value);
-              }}
-              onSelect={(value: string) => {
-                setFromValue(value);
-                form.setFieldValue('from', value);
-              }}
-              filterOption={(inputValue: string, option?: { value: string; label: React.ReactElement }) =>
-                option?.value?.toLowerCase().includes(inputValue.toLowerCase()) ?? false
-              }
-            >
-              <Input 
-                prefix={<CarOutlined style={stylesConfig.form.icon} />}
-                placeholder="Enter city, terminal..."
-                size="large"
-              />
-            </AutoComplete>
-          </Form.Item>
-          
-          <div className="hidden lg:block absolute -right-5 top-[45px] z-10">
-            <Button
-              type="text"
-              icon={<SwapOutlined style={{ fontSize: '18px' }} />}
-              onClick={handleSwap}
-              style={stylesConfig.swapButton}
-              className="hover:rotate-180 transition-transform duration-300"
-            />
-          </div>
+            label="FROM"
+            value={fromValue}
+            locations={locations}
+            filteredLocations={filterLocations(fromValue)}
+            onChange={(value) => handleLocationChange(value, 'from')}
+            onSelect={(value) => handleLocationChange(value, 'from')}
+          />
         </div>
 
-        <Form.Item
-          name="to"
-          label={<span style={stylesConfig.form.label}>TO</span>}
-          rules={[{message: 'Please select destination' }]}
-          style={{ marginBottom: 0 }}
-        >
-          <AutoComplete
-            placeholder="Enter city, terminal..."
-            options={filterLocations(toValue).map((loc) => ({
-              value: loc.english_name,
-              label: (
-                <div>
-                  <strong>{loc.short_code}</strong> - {loc.english_name} ({loc.code_state})
-                </div>
-              ),
-            }))}
+        <SwapButton onClick={handleSwap} />
+
+        <div className="w-full lg:flex-1 grid grid-cols-1 lg:grid-cols-4 gap-4">
+          <LocationInput
+            name="to"
+            label="TO"
             value={toValue}
-            onChange={(value: string) => {
-              setToValue(value);
-              form.setFieldValue('to', value);
-            }}
-            onSelect={(value: string) => {
-              setToValue(value);
-              form.setFieldValue('to', value);
-            }}
-            filterOption={(inputValue: string, option?: { value: string; label: React.ReactElement }) =>
-              option?.value?.toLowerCase().includes(inputValue.toLowerCase()) ?? false
-            }
-          >
-            <Input 
-              prefix={<CarOutlined style={stylesConfig.form.icon} />}
-              placeholder="Enter city, terminal..."
-              size="large"
-            />
-          </AutoComplete>
-        </Form.Item>
-
-        <Form.Item
-          name="departureDate"
-          label={<span style={stylesConfig.form.label}>DEPARTURE DATE</span>}
-          rules={[
-            { message: 'Please select departure date' },
-            {
-              validator: (_, value) => {
-                if (!value) return Promise.reject('Please select departure date');
-                if (value.isBefore(dayjs(), 'day')) {
-                  return Promise.reject('Departure date cannot be in the past');
-                }
-                return Promise.resolve();
-              },
-            },
-          ]}
-          style={{ marginBottom: 0 }}
-        >
-          <DatePicker
-            showTime
-            format="DD / MM / YYYY HH:mm"
-            placeholder="DD / MM / YYYY   00:00"
-            className="w-full"
-            suffixIcon={null}
-            size="large"
+            locations={locations}
+            filteredLocations={filterLocations(toValue)}
+            onChange={(value) => handleLocationChange(value, 'to')}
+            onSelect={(value) => handleLocationChange(value, 'to')}
           />
-        </Form.Item>
 
-        <div className="flex flex-col">
-          <div className="mb-2">
-            <Form.Item 
-              name="roundTrip" 
-              valuePropName="checked" 
-              className="m-0"
-              style={{ marginBottom: 8 }}
-            >
-              <Checkbox 
-                onChange={(e: CheckboxChangeEvent) => setRoundTrip(e.target.checked)}
-                style={{ fontSize: '12px', fontWeight: 600 }}
-              >
-                <span style={{ textTransform: 'uppercase', letterSpacing: '0.05em', color: colors.text.secondary, fontSize: '12px', fontWeight: 600 }}>
-                  ROUND TRIP?
-                </span>
-              </Checkbox>
-            </Form.Item>
-          </div>
-          <Form.Item
-            name="returnDate"
-            className="m-0"
-            style={{ marginBottom: 0 }}
-            rules={[
-              {
-                validator: (_, value) => {
-                  const roundTripValue = form.getFieldValue('roundTrip');
-                  if (roundTripValue && !value) {
-                    return Promise.reject('Please select return date');
-                  }
-                  if (roundTripValue && value) {
-                    const departureDate = form.getFieldValue('departureDate');
-                    if (departureDate && value.isBefore(departureDate, 'day')) {
-                      return Promise.reject('Return date must be after departure date');
-                    }
-                  }
-                  return Promise.resolve();
-                },
-              },
-            ]}
-          >
-            <DatePicker
-              showTime
-              format="DD / MM / YYYY HH:mm"
-              placeholder="DD / MM / YYYY   00:00"
+          <DatePickerField
+            name="departureDate"
+            label="DEPARTURE DATE"
+            form={form}
+            isReturnDate={false}
+          />
+
+          <div className="flex flex-col">
+            <div className="mb-[8px]">
+              <Form.Item name="roundTrip" valuePropName="checked" className="m-0">
+                <Checkbox
+                  onChange={(e: CheckboxChangeEvent) => setRoundTrip(e.target.checked)}
+                  style={{ fontSize: '12px', fontWeight: 600 }}
+                >
+                  <span
+                    style={{
+                      textTransform: 'uppercase',
+                      color: colors.text.secondary,
+                      fontSize: '12px',
+                      fontWeight: 600,
+                    }}
+                  >
+                    ROUND TRIP?
+                  </span>
+                </Checkbox>
+              </Form.Item>
+            </div>
+            <DatePickerField
+              name="returnDate"
+              label=""
+              form={form}
               disabled={!roundTrip}
-              className="w-full"
-              suffixIcon={null}
-              size="large"
+              isReturnDate={true}
             />
-          </Form.Item>
-        </div>
+          </div>
 
-        <Form.Item
-          name="passengers"
-          label={<span style={stylesConfig.form.label}>NO. OF PASSENGER</span>}
-          rules={[
-            { message: 'Please select number of passengers' },
-            { type: 'number', min: 1, message: 'At least 1 passenger required' },
-          ]}
-          style={{ marginBottom: 0 }}
-        >
-          <InputNumber
-            min={1}
-            max={99}
-            className="w-full"
-            controls={{
-              upIcon: <span>▲</span>,
-              downIcon: <span>▼</span>,
-            }}
-            placeholder="1"
-            size="large"
-          />
-        </Form.Item>
+          <PassengerInput />
+        </div>
       </div>
 
-      <Form.Item className="flex justify-center mt-10 mb-0">
+      <Form.Item className="flex justify-center">
         <Button
+          className="mt-10"
           type="primary"
-          icon={<SearchOutlined />}
+          icon={<IoSearch style={{ fontSize: '18px' }} />}
           htmlType="submit"
           size="large"
           style={stylesConfig.searchButton}
@@ -268,4 +118,3 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
     </Form>
   );
 };
-
