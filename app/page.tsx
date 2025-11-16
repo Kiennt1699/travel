@@ -108,9 +108,10 @@ export default function Home() {
           <TravelContain />
 
           <div 
-            className="bg-white rounded-2xl p-6 md:p-8 shadow-xl w-full"
+            className="bg-white rounded-2xl p-8 md:p-10 shadow-2xl w-full animate-scale-in"
             style={{
               borderTop: `4px solid ${colors.primary}`,
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.05)',
             }}
           >
             <CustomTabs

@@ -60,16 +60,18 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
       layout="vertical"
       initialValues={{ passengers: 1, roundTrip: false }}
       onFinish={onSubmit}
+      className="animate-slide-up"
     >
       <div 
-        className="grid grid-cols-1 lg:grid-cols-5"
+        className="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-6"
         style={stylesConfig.form.grid}
       >
         <div className="relative">
           <Form.Item
             name="from"
             label={<span style={stylesConfig.form.label}>FROM</span>}
-            rules={[{ required: true, message: 'Please select origin' }]}
+            rules={[{ message: 'Please select origin' }]}
+            style={{ marginBottom: 0 }}
           >
             <AutoComplete
               placeholder="Enter city, terminal..."
@@ -90,24 +92,25 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
                 setFromValue(value);
                 form.setFieldValue('from', value);
               }}
-              filterOption={(inputValue: string, option: { value: string }) =>
+              filterOption={(inputValue: string, option?: { value: string; label: React.ReactElement }) =>
                 option?.value?.toLowerCase().includes(inputValue.toLowerCase()) ?? false
               }
             >
               <Input 
                 prefix={<CarOutlined style={stylesConfig.form.icon} />}
-                style={stylesConfig.form.input}
                 placeholder="Enter city, terminal..."
+                size="large"
               />
             </AutoComplete>
           </Form.Item>
           
-          <div className="hidden lg:block absolute -right-5 top-[38px] z-10">
+          <div className="hidden lg:block absolute -right-5 top-[45px] z-10">
             <Button
               type="text"
               icon={<SwapOutlined style={{ fontSize: '18px' }} />}
               onClick={handleSwap}
               style={stylesConfig.swapButton}
+              className="hover:rotate-180 transition-transform duration-300"
             />
           </div>
         </div>
@@ -115,7 +118,8 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
         <Form.Item
           name="to"
           label={<span style={stylesConfig.form.label}>TO</span>}
-          rules={[{ required: true, message: 'Please select destination' }]}
+          rules={[{message: 'Please select destination' }]}
+          style={{ marginBottom: 0 }}
         >
           <AutoComplete
             placeholder="Enter city, terminal..."
@@ -136,14 +140,14 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
               setToValue(value);
               form.setFieldValue('to', value);
             }}
-            filterOption={(inputValue: string, option: { value: string }) =>
+            filterOption={(inputValue: string, option?: { value: string; label: React.ReactElement }) =>
               option?.value?.toLowerCase().includes(inputValue.toLowerCase()) ?? false
             }
           >
             <Input 
               prefix={<CarOutlined style={stylesConfig.form.icon} />}
-              style={stylesConfig.form.input}
               placeholder="Enter city, terminal..."
+              size="large"
             />
           </AutoComplete>
         </Form.Item>
@@ -152,7 +156,7 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
           name="departureDate"
           label={<span style={stylesConfig.form.label}>DEPARTURE DATE</span>}
           rules={[
-            { required: true, message: 'Please select departure date' },
+            { message: 'Please select departure date' },
             {
               validator: (_, value) => {
                 if (!value) return Promise.reject('Please select departure date');
@@ -163,33 +167,40 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
               },
             },
           ]}
+          style={{ marginBottom: 0 }}
         >
           <DatePicker
             showTime
             format="DD / MM / YYYY HH:mm"
-            placeholder="DD / MM / YYYY 00:00"
+            placeholder="DD / MM / YYYY   00:00"
             className="w-full"
             suffixIcon={null}
-            style={stylesConfig.form.input}
+            size="large"
           />
         </Form.Item>
 
         <div className="flex flex-col">
-          <Form.Item 
-            name="roundTrip" 
-            valuePropName="checked" 
-            className="m-0 mb-2"
-          >
-            <Checkbox 
-              onChange={(e: CheckboxChangeEvent) => setRoundTrip(e.target.checked)}
-              style={{ fontSize: '12px', fontWeight: 600 }}
+          <div className="mb-2">
+            <Form.Item 
+              name="roundTrip" 
+              valuePropName="checked" 
+              className="m-0"
+              style={{ marginBottom: 8 }}
             >
-              <span style={{ textTransform: 'uppercase', letterSpacing: '0.05em', color: colors.text.secondary }}>ROUND TRIP?</span>
-            </Checkbox>
-          </Form.Item>
+              <Checkbox 
+                onChange={(e: CheckboxChangeEvent) => setRoundTrip(e.target.checked)}
+                style={{ fontSize: '12px', fontWeight: 600 }}
+              >
+                <span style={{ textTransform: 'uppercase', letterSpacing: '0.05em', color: colors.text.secondary, fontSize: '12px', fontWeight: 600 }}>
+                  ROUND TRIP?
+                </span>
+              </Checkbox>
+            </Form.Item>
+          </div>
           <Form.Item
             name="returnDate"
             className="m-0"
+            style={{ marginBottom: 0 }}
             rules={[
               {
                 validator: (_, value) => {
@@ -211,11 +222,11 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
             <DatePicker
               showTime
               format="DD / MM / YYYY HH:mm"
-              placeholder="DD / MM / YYYY 00:00"
+              placeholder="DD / MM / YYYY   00:00"
               disabled={!roundTrip}
               className="w-full"
               suffixIcon={null}
-              style={stylesConfig.form.input}
+              size="large"
             />
           </Form.Item>
         </div>
@@ -224,9 +235,10 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
           name="passengers"
           label={<span style={stylesConfig.form.label}>NO. OF PASSENGER</span>}
           rules={[
-            { required: true, message: 'Please select number of passengers' },
+            { message: 'Please select number of passengers' },
             { type: 'number', min: 1, message: 'At least 1 passenger required' },
           ]}
+          style={{ marginBottom: 0 }}
         >
           <InputNumber
             min={1}
@@ -236,13 +248,13 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
               upIcon: <span>▲</span>,
               downIcon: <span>▼</span>,
             }}
-            style={stylesConfig.form.input}
             placeholder="1"
+            size="large"
           />
         </Form.Item>
       </div>
 
-      <Form.Item className="flex justify-center mt-8 mb-0">
+      <Form.Item className="flex justify-center mt-10 mb-0">
         <Button
           type="primary"
           icon={<SearchOutlined />}

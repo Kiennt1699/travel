@@ -16,18 +16,31 @@ export const TabLabel: React.FC<TabLabelProps> = ({
   isActive 
 }) => {
   return (
-    <div className="flex items-center gap-3" style={{ justifyContent: 'flex-start' }}>
+    <div 
+      className="flex items-center gap-3 transition-all duration-300" 
+      style={{ justifyContent: 'center' }}
+    >
       <div 
-        className="flex items-center justify-center w-10 h-10 transition-all"
+        className="flex items-center justify-center w-11 h-11 transition-all duration-300"
         style={{ 
           backgroundColor: iconBgColor,
           color: iconColor,
           borderRadius: '50%',
+          transform: isActive ? 'scale(1.05)' : 'scale(1)',
+          boxShadow: isActive ? `0 4px 12px ${iconColor}40` : 'none',
         }}
       >
         {icon}
       </div>
-      <span className="font-medium" style={{ fontSize: '15px' }}>{label}</span>
+      <span 
+        className="font-semibold transition-all duration-300" 
+        style={{ 
+          fontSize: '15px',
+          color: isActive ? '#1e293b' : '#64748b',
+        }}
+      >
+        {label}
+      </span>
     </div>
   );
 };

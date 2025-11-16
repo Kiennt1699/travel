@@ -32,8 +32,8 @@ export const stylesConfig = {
   },
   form: {
     grid: {
-      gap: '24px',
-      marginBottom: '32px',
+      gap: '20px',
+      marginBottom: '24px',
     },
     label: {
       fontWeight: 600,
@@ -41,14 +41,12 @@ export const stylesConfig = {
       letterSpacing: '0.05em',
       fontSize: '12px',
       color: colors.text.secondary,
-      marginBottom: '8px',
-    },
-    input: {
-      paddingLeft: '48px',
+      marginBottom: '10px',
+      display: 'block',
     },
     icon: {
       color: colors.text.tertiary,
-      marginRight: '12px',
+      fontSize: '18px',
     },
   },
   swapButton: {
@@ -56,12 +54,12 @@ export const stylesConfig = {
     backgroundColor: 'white',
     border: `2px solid ${colors.border.default}`,
     borderRadius: '50%',
-    width: '40px',
-    height: '40px',
+    width: '44px',
+    height: '44px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    boxShadow: '0 4px 12px rgba(6, 182, 212, 0.15)',
   },
   searchButton: {
     backgroundColor: colors.tabs.bus.icon,
