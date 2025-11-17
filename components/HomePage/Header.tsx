@@ -4,10 +4,12 @@ import { TravelContain } from './TravelContain';
 export const Header = () => {
   return (
     <>
-      <div className="flex items-start justify-between mb-12">
+      <div className="mb-8">
         <Logo />
       </div>
-      <TravelContain />
+      <div className="flex justify-center">
+        <TravelContain />
+      </div>
     </>
   );
 };

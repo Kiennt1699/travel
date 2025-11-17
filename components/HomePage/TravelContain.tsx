@@ -2,7 +2,7 @@ import { colors } from '@/lib/theme';
 
 export const TravelContain = () => {
   return (
-    <div className="text-center mb-12 max-w-3xl px-4">
+    <div className="text-center mb-8 max-w-3xl px-4">
       <h1 
         className="text-4xl md:text-5xl font-bold mb-4 leading-tight"
         style={{ color: colors.text.primary }}

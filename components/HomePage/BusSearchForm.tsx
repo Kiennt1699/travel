@@ -27,6 +27,7 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
     filterLocations,
     handleSwap,
     handleLocationChange,
+    handleFormValuesChange,
   } = useBusSearchForm(locations);
 
   return (
@@ -35,6 +36,7 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
       layout="vertical"
       initialValues={{ passengers: 1, roundTrip: false }}
       onFinish={onSubmit}
+      onValuesChange={handleFormValuesChange}
       className="animate-slide-up"
     >
       <div className="flex flex-col lg:flex-row gap-4 mt-6 items-start relative">
@@ -47,6 +49,7 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
             filteredLocations={filterLocations(fromValue)}
             onChange={(value) => handleLocationChange(value, 'from')}
             onSelect={(value) => handleLocationChange(value, 'from')}
+            form={form}
           />
         </div>
 
@@ -61,6 +64,7 @@ export const BusSearchForm: React.FC<BusSearchFormProps> = ({ locations, onSubmi
             filteredLocations={filterLocations(toValue)}
             onChange={(value) => handleLocationChange(value, 'to')}
             onSelect={(value) => handleLocationChange(value, 'to')}
+            form={form}
           />
 
           <DatePickerField

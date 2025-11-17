@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Form } from 'antd';
 import type { Dayjs } from 'dayjs';
 import type { FormValues, Location } from '@/app/page';
@@ -9,7 +9,7 @@ export const useBusSearchForm = (locations: Location[]) => {
   const [fromValue, setFromValue] = useState('');
   const [toValue, setToValue] = useState('');
 
-  const filterLocations = (input: string): Location[] => {
+  const filterLocations = useCallback((input: string): Location[] => {
     if (!input) return locations;
     const lowerInput = input.toLowerCase();
     return locations.filter(
@@ -18,25 +18,32 @@ export const useBusSearchForm = (locations: Location[]) => {
         loc.short_code.toLowerCase().includes(lowerInput) ||
         loc.code_state.toLowerCase().includes(lowerInput)
     );
-  };
+  }, [locations]);
 
-  const handleSwap = () => {
-    const currentFrom = form.getFieldValue('from');
-    const currentTo = form.getFieldValue('to');
+  const handleSwap = useCallback(() => {
+    const currentFrom = form.getFieldValue('from') || '';
+    const currentTo = form.getFieldValue('to') || '';
     form.setFieldsValue({ from: currentTo, to: currentFrom });
-    setFromValue(currentTo || '');
-    setToValue(currentFrom || '');
-  };
+    setFromValue(currentTo);
+    setToValue(currentFrom);
+  }, [form]);
 
-  const handleLocationChange = (value: string, field: 'from' | 'to') => {
+  const handleLocationChange = useCallback((value: string, field: 'from' | 'to') => {
     if (field === 'from') {
       setFromValue(value);
-      form.setFieldValue('from', value);
     } else {
       setToValue(value);
-      form.setFieldValue('to', value);
     }
-  };
+  }, []);
+
+  const handleFormValuesChange = useCallback((changedValues: Partial<FormValues>) => {
+    if ('from' in changedValues) {
+      setFromValue(changedValues.from || '');
+    }
+    if ('to' in changedValues) {
+      setToValue(changedValues.to || '');
+    }
+  }, []);
 
   return {
     form,
@@ -47,6 +54,7 @@ export const useBusSearchForm = (locations: Location[]) => {
     filterLocations,
     handleSwap,
     handleLocationChange,
+    handleFormValuesChange,
   };
 };
 

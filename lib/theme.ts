@@ -1,42 +1,42 @@
 import type { ThemeConfig } from 'antd';
 
 export const colors = {
-  primary: '#0ea5e9', // sky-500
-  primaryHover: '#0284c7', // sky-600
-  success: '#10b981', // green-500
-  warning: '#f59e0b', // amber-500
-  error: '#ef4444', // red-500
+  primary: '#19C0FF',
+  primaryHover: '#0284c7',
+  success: '#10b981', 
+  warning: '#f59e0b', 
+  error: '#ef4444', 
   text: {
-    primary: '#1e293b', // slate-800
-    secondary: '#64748b', // slate-500
-    tertiary: '#94a3b8', // slate-400
+    primary: '#1e293b',
+    secondary: '#64748b', 
+    tertiary: '#94a3b8', 
   },
   background: {
     primary: '#ffffff',
-    secondary: '#f8fafc', // slate-50
-    tertiary: '#f0f9ff', // sky-50
-    activeTab: '#e0f7fa', // cyan-50
-    activeHotelTab: '#ecfccb', // lime-100
+    secondary: '#f8fafc', 
+    tertiary: '#f0f9ff', 
+    activeTab: '#e0f7fa', 
+    activeHotelTab: '#ecfccb', 
   },
   border: {
-    default: '#e2e8f0', // slate-200
-    focus: '#0ea5e9', // sky-500
+    default: '#e2e8f0', 
+    focus: '#0ea5e9',
   },
   tabs: {
     bus: {
-      icon: '#06b6d4', // cyan-500
-      iconBg: '#cffafe', // cyan-100
-      activeBg: '#ecfeff', // cyan-50
+      icon: '#19C0FF', 
+      iconBg: '#cffafe', 
+      activeBg: '#ecfeff', 
     },
     hotel: {
-      icon: '#84cc16', // lime-500
-      iconBg: '#d9f99d', // lime-200
-      activeBg: '#f7fee7', // lime-50
+      icon: '#84cc16',
+      iconBg: '#d9f99d', 
+      activeBg: '#f7fee7', 
     },
     flight: {
-      icon: '#6366f1', // indigo-500
-      iconBg: '#c7d2fe', // indigo-200
-      activeBg: '#eef2ff', // indigo-50
+      icon: '#6366f1', 
+      iconBg: '#c7d2fe',
+      activeBg: '#eef2ff', 
     },
   },
 };

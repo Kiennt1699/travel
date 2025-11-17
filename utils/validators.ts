@@ -2,11 +2,19 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import type { FormInstance } from 'antd';
 
-export const createLocationValidator = (fieldName: string) => ({
+export const createLocationValidator = (fieldName: string, form: FormInstance, currentField: 'from' | 'to') => ({
   validator: (_: unknown, value: string) => {
     if (!value) {
       return Promise.reject(`Please select your ${fieldName}`);
     }
+    
+    const otherField = currentField === 'from' ? 'to' : 'from';
+    const otherValue = form.getFieldValue(otherField);
+    
+    if (otherValue && value && value.toLowerCase() === otherValue.toLowerCase()) {
+      return Promise.reject('Origin and destination cannot be the same location');
+    }
+    
     return Promise.resolve();
   },
 });

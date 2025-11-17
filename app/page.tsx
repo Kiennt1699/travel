@@ -100,22 +100,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative px-4 md:px-8 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center">
-          <Header />
+        <Header />
 
-          <div 
-            className="bg-white rounded-2xl p-8 md:p-10 shadow-2xl w-full animate-scale-in"
-            style={{
-              borderTop: `4px solid ${colors.primary}`,
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.05)',
-            }}
-          >
-            <CustomTabs
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-              tabItems={tabItems}
-            />
-          </div>
+        <div 
+          className="bg-white rounded-2xl p-8 md:p-10 shadow-2xl w-full animate-scale-in"
+          style={{
+            borderTop: `4px solid ${colors.primary}`,
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.05)',
+          }}
+        >
+          <CustomTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            tabItems={tabItems}
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { SwapOutlined } from '@ant-design/icons';
+import { IoMdSwap } from "react-icons/io";
 import { stylesConfig } from '@/lib/styles.config';
 
 interface SwapButtonProps {
@@ -11,7 +11,7 @@ export const SwapButton: React.FC<SwapButtonProps> = ({ onClick }) => {
     <div className="hidden lg:flex items-center justify-center" style={{ marginTop: '42px' }}>
       <Button
         type="text"
-        icon={<SwapOutlined style={{ fontSize: '18px' }} />}
+        icon={<IoMdSwap  style={{ fontSize: '18px' }} />}
         onClick={onClick}
         style={stylesConfig.swapButton}
         className="hover:rotate-180 transition-transform duration-300"

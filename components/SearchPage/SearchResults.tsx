@@ -4,7 +4,6 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import dayjs from 'dayjs';
 import { SearchSkeleton } from '@/components/common/SearchSkeleton';
-import { stylesConfig } from '@/lib/styles.config';
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -24,6 +23,11 @@ function SearchContent() {
 
   const departureDate = parseDate(dep);
   const returnDate = parseDate(ret);
+  
+  const formatDisplayDate = (date: dayjs.Dayjs | null) => {
+    if (!date) return 'Not selected';
+    return date.format('MMMM DD, YYYY [at] HH:mm');
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,53 +41,24 @@ function SearchContent() {
     return <SearchSkeleton />;
   }
 
-  const InfoRow = ({ label }: { label: string }) => (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      paddingTop: '24px',
-      paddingBottom: '24px',
-      borderBottom: '1px solid #e5e7eb',
-    }}>
-      <span style={{
-        fontSize: '16px',
-        fontWeight: 400,
-        color: '#1f2937',
-        letterSpacing: '0.01em',
-      }}>
-        {label}
-      </span>
+  const InfoRow = ({ label, value }: { label: string; value: string }) => (
+    <div className="search-info-row">
+      <span className="search-info-label">{label}</span>
+      <span className="search-info-value">{value}</span>
     </div>
   );
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#e0f2fe',
-      padding: '0',
-    }}>
-
-      {/* Content */}
-      <div style={{
-        backgroundColor: '#e0f2fe',
-        padding: '40px 20px',
-        display: 'flex',
-        justifyContent: 'center',
-      }}>
-        <div style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '16px',
-          padding: '48px',
-          maxWidth: '800px',
-          width: '100%',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
-        }}>
-          <InfoRow label={`From: ${from}`} />
-          <InfoRow label="To:" />
-          <InfoRow label="Departure date:" />
-          <InfoRow label="Return date:" />
-          <InfoRow label="No. of passenger" />
-        </div>
+    <div className="search-results-container">
+      <div className="search-results-card">
+        <InfoRow label="From:" value={from || 'Not specified'} />
+        <InfoRow label="To:" value={to || 'Not specified'} />
+        <InfoRow label="Departure date:" value={formatDisplayDate(departureDate)} />
+        <InfoRow 
+          label="Return date:" 
+          value={returnDate ? formatDisplayDate(returnDate) : 'One way trip'} 
+        />
+        <InfoRow label="Passengers:" value={pax} />
       </div>
     </div>
   );

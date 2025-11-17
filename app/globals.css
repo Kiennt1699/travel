@@ -162,7 +162,6 @@ body {
   animation: scale-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Form field styling */
 .ant-form-item {
   margin-bottom: 0 !important;
 }
@@ -175,7 +174,6 @@ body {
   height: auto !important;
 }
 
-/* Ensure all form inputs have equal width */
 .ant-form-item .ant-input-affix-wrapper,
 .ant-form-item .ant-picker,
 .ant-form-item .ant-input-number,
@@ -242,7 +240,6 @@ body {
   padding-left: 0 !important;
 }
 
-/* Custom input styling */
 .ant-input,
 .ant-picker-input > input,
 .ant-input-number-input {
@@ -258,7 +255,6 @@ body {
   font-weight: 400 !important;
 }
 
-/* Disabled state */
 .ant-picker-disabled,
 .ant-input-number-disabled {
   background-color: #f8fafc !important;
@@ -266,7 +262,6 @@ body {
   cursor: not-allowed;
 }
 
-/* Search button animation */
 .ant-btn-primary {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -281,7 +276,6 @@ body {
   transform: translateY(0);
 }
 
-/* Checkbox styling */
 .ant-checkbox-wrapper {
   align-items: center;
 }
@@ -300,7 +294,6 @@ body {
   border-color: #06b6d4;
 }
 
-/* AutoComplete styling */
 .ant-select-auto-complete {
   width: 100% !important;
 }
@@ -320,7 +313,6 @@ body {
   padding-left: 0 !important;
 }
 
-/* Autocomplete dropdown */
 .ant-select-dropdown {
   border-radius: 10px !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
@@ -334,7 +326,7 @@ body {
   background-color: #f0f9ff !important;
 }
 
-/* Date Picker Dropdown */
+
 .ant-picker-dropdown {
   border-radius: 12px !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
@@ -344,7 +336,6 @@ body {
   background-color: #06b6d4 !important;
 }
 
-/* Today's date - cyan background */
 .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner {
   background-color: #22d3ee !important;
   color: white !important;
@@ -356,23 +347,19 @@ body {
   display: none !important;
 }
 
-/* Selected date overrides today */
 .ant-picker-cell-in-view.ant-picker-cell-selected.ant-picker-cell-today .ant-picker-cell-inner {
   background-color: #06b6d4 !important;
 }
 
-/* Weekend dates - red color */
 .ant-picker-cell-in-view:nth-child(7n) .ant-picker-cell-inner,
 .ant-picker-cell-in-view:nth-child(7n+1) .ant-picker-cell-inner {
   color: #ef4444 !important;
 }
 
-/* Hover states */
 .ant-picker-cell-in-view:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
   background-color: #f0f9ff !important;
 }
 
-/* DatePicker with prefix icon */
 .ant-picker-input {
   display: flex !important;
   align-items: center !important;
@@ -382,7 +369,6 @@ body {
   margin-left: 8px !important;
 }
 
-/* Responsive improvements */
 @media (max-width: 1024px) {
   .custom-tabs-wrapper .ant-tabs-tab {
     padding: 16px 20px !important;
@@ -390,5 +376,93 @@ body {
   
   .custom-tabs-wrapper .ant-tabs-nav-list {
     gap: 4px;
+  }
+}
+
+.search-page-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #e0f2fe 0%, #ffffff 100%);
+  position: relative;
+  padding: 32px 16px;
+}
+
+.search-page-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-results-container {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-results-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 48px 56px;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  min-height: 400px;
+}
+
+.search-results-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #06b6d4;
+}
+
+.search-info-row {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  gap: 12px;
+}
+
+.search-info-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.01em;
+  min-width: 150px;
+  flex-shrink: 0;
+}
+
+.search-info-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e293b;
+  text-align: left;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .search-results-card {
+    padding: 24px;
+  }
+  
+  .search-info-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .search-info-label {
+    min-width: auto;
+  }
+  
+  .search-info-value {
+    text-align: left;
+    white-space: normal;
+    word-break: break-word;
   }
 }

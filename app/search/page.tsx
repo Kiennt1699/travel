@@ -4,9 +4,13 @@ import { SearchResults } from '@/components/SearchPage/SearchResults';
 
 export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-100 to-white relative p-4 md:p-8">
-      <Logo />
-      <SearchResults />
+    <div className="search-page-container">
+      <div className="search-page-content">
+        <div className="mb-8">
+          <Logo />
+        </div>
+        <SearchResults />
+      </div>
     </div>
   );
 }
